@@ -7,5 +7,7 @@ namespace EncurtarUrl.Core.Handlers
     public interface IUrlHandler
     {
         Task<BaseResponse<Url?>> CreateShortUrlAsync(ShortenedUrlRequest request);
+
+        // Task<BaseResponse<Url?>> RedirectToOriginalUrl(string shortCode);
     }
 }
