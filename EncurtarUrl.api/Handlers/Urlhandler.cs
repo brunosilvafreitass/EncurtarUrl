@@ -28,6 +28,7 @@ namespace EncurtarUrl.api.Handlers
                     OriginalUrl = request.OriginalUrl,
                     ShortenedCode = shortCode,
                     ShortenedUrl = $"{Configuration.BackEndUrl}/api/v1/shortened/{shortCode}",
+                    ClickCount = 0,
                     CreatedAt = DateTime.UtcNow.AddHours(-3)
                 };
 
@@ -66,7 +67,12 @@ namespace EncurtarUrl.api.Handlers
         public async Task<BaseResponse<Url?>> RedirectToOriginalUrl(string shortCode)
         {
             var mapping = await context.Urls.FirstOrDefaultAsync(u => u.ShortenedCode == shortCode);
-            if (mapping is null)
+            if (mapping != null)
+            {
+                mapping.ClickCount++;
+                await context.SaveChangesAsync();
+            }
+            else
                 return new BaseResponse<Url?>(null, 404, "URL não encontrada");
 
             return new BaseResponse<Url?>(mapping, 200, "URL encontrada");

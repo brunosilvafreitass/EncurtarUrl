@@ -15,6 +15,7 @@ public class RedirectToOriginalUrlEndpoint : IEndPoint
 
     private static async Task<IResult> HandlerAsync(IUrlHandler handler, string shortCode)
     {
+
         var result = await handler.RedirectToOriginalUrl(shortCode);
 
         return result.IsSuccess && result.Data?.OriginalUrl is not null
