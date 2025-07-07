@@ -27,7 +27,7 @@ namespace EncurtarUrl.api.Handlers
                 {
                     OriginalUrl = request.OriginalUrl,
                     ShortenedCode = shortCode,
-                    ShortenedUrl = $"{Configuration.BackEndUrl}/{shortCode}",
+                    ShortenedUrl = $"{Configuration.BackEndUrl}/api/v1/shortened/{shortCode}",
                     CreatedAt = DateTime.UtcNow.AddHours(-3)
                 };
 
@@ -35,7 +35,7 @@ namespace EncurtarUrl.api.Handlers
                 await context.SaveChangesAsync();
 
                 return new BaseResponse<Url?>(mappedUrl, 200, "Url encurtada com sucesso");
-                
+
             }
             catch (Exception ex)
             {
@@ -43,5 +43,33 @@ namespace EncurtarUrl.api.Handlers
             }
         }
 
+        public async Task<BaseResponse<List<Url?>>> GetAllUrlsAsync()
+        {
+            try
+            {
+                var urls = await context.Urls.ToListAsync();
+
+                if (urls == null || urls.Count == 0)
+                {
+                    return new BaseResponse<List<Url?>>(null, 404, "Nenhuma URL encontrada");
+                }
+
+                return new BaseResponse<List<Url?>>(urls!, 200, "URLs encontradas");
+            }
+            catch (Exception)
+            {
+
+                return new BaseResponse<List<Url?>>(null, 500, "Erro ao buscar URLs");
+            }
+        }
+
+        public async Task<BaseResponse<Url?>> RedirectToOriginalUrl(string shortCode)
+        {
+            var mapping = await context.Urls.FirstOrDefaultAsync(u => u.ShortenedCode == shortCode);
+            if (mapping is null)
+                return new BaseResponse<Url?>(null, 404, "URL não encontrada");
+
+            return new BaseResponse<Url?>(mapping, 200, "URL encontrada");
+        }
     }
 }

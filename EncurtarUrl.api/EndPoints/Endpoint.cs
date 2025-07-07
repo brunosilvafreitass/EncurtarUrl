@@ -14,7 +14,9 @@ public static class Endpoint
 
         endpoints.MapGroup("api/v1/shortened")
         .WithTags("Shortened Urls")
-        .MapEndpoint<UrlEndpoint>();
+        .MapEndpoint<UrlEndpoint>()
+        .MapEndpoint<RedirectToOriginalUrlEndpoint>()
+        .MapEndpoint<GetAllUrlsEndpoint>();
     }
 
     private static IEndpointRouteBuilder MapEndpoint<T>(this IEndpointRouteBuilder app)

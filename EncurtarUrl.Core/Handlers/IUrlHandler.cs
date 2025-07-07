@@ -8,6 +8,8 @@ namespace EncurtarUrl.Core.Handlers
     {
         Task<BaseResponse<Url?>> CreateShortUrlAsync(ShortenedUrlRequest request);
 
-        // Task<BaseResponse<Url?>> RedirectToOriginalUrl(string shortCode);
+        Task<BaseResponse<Url?>> RedirectToOriginalUrl(string shortCode);
+
+        Task<BaseResponse<List<Url?>>> GetAllUrlsAsync();
     }
 }
