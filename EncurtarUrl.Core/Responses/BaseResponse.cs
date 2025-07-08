@@ -20,6 +20,7 @@ namespace EncurtarUrl.Core.Responses
 
         public string? Message { get; set; }
 
+        [JsonIgnore]
         public bool IsSuccess => _code >= 200 && _code < 299;
     }
 }

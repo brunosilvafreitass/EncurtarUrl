@@ -1,0 +1,13 @@
+@page "/encurtador"
+@inherits EncurtadorPage
+@rendermode InteractiveServer
+
+<MudText Typo="Typo.h3">Criar EncurtarUrl Encurtada</MudText>
+<MudPaper Class="pa-4" Elevation="1">
+    <EditForm Model="@ImputModel" OnValidSubmit="EncurtarUrlAsync">
+        <DataAnnotationsValidator />
+        <MudTextField Label="Url" HelperText="Campo obrigatóro" @bind-Value="ImputModel.OriginalUrl"
+            For="@(() => ImputModel.OriginalUrl)" Required="true" />
+        <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Salvar</MudButton>
+    </EditForm>
+</MudPaper>
