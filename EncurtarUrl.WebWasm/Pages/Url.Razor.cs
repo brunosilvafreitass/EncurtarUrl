@@ -1,4 +1,5 @@
 using EncurtarUrl.Core.Handlers;
+using EncurtarUrl.Core.Models;
 using EncurtarUrl.Core.Requests;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -9,6 +10,7 @@ public partial class EncurtadorPage : ComponentBase
 {
     public bool IsBusy { get; set; } = false;
     public ShortenedUrlRequest ImputModel { get; set; } = new();
+    public Url Url { get; set; } = new();
 
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;

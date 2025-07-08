@@ -9,6 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Adicione esta política de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("wasm",
+        policy => policy
+            .WithOrigins([Configuration.BackEndUrl,
+                          Configuration.FrontEndUrl]) // coloque a URL do seu frontend
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+    );
+});
+
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -23,6 +36,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x => { x.CustomSchemaIds(type => type.FullName); });
 
 var app = builder.Build();
+
+// Ative o CORS antes do UseAuthorization/UseEndpoints
+app.UseCors("wasm");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
