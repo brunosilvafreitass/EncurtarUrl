@@ -25,6 +25,8 @@ public partial class EncurtadorPage : ComponentBase
         try
         {
             var result = await Handler.CreateShortUrlAsync(ImputModel);
+            Url.ShortenedUrl = result.Data!.ShortenedUrl;
+            StateHasChanged();
             if (result.IsSuccess)
             {
                 Snackbar.Add(result.Message!, Severity.Success);
