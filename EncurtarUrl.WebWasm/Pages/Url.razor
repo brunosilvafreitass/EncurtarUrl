@@ -1,21 +1,80 @@
 @page "/"
 @inherits EncurtadorPage
 
-<MudText Typo="Typo.h3">Criar EncurtarUrl Encurtada</MudText>
-<MudPaper Class="pa-4" Elevation="1">
-    <EditForm Model="@ImputModel" OnValidSubmit="EncurtarUrlAsync">
-        <DataAnnotationsValidator />
-        <MudTextField Label="Url" HelperText="Campo obrigatóro" @bind-Value="ImputModel.OriginalUrl"
-            For="@(() => ImputModel.OriginalUrl)" Required="true" />
-        <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Salvar</MudButton>
-    </EditForm>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-8">
+    <MudPaper Class="pa-8 rounded-lg" Elevation="5">
+        <EditForm Model="@ImputModel" OnValidSubmit="EncurtarUrlAsync">
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12" Class="text-center mb-6">
+                    <MudIcon Icon="@Icons.Material.Filled.Link" Size="Size.Large" Color="Color.Primary" Class="mb-2"/>
+                    <MudText Typo="Typo.h4" Class="d-block" Color="Color.Primary">Encurtador de URL</MudText>
+                </MudItem>
 
-    @if (Url.ShortenedUrl != null)
-    {
-        <MudText Typo="Typo.h6">
-            <strong>URL Encurtada:</strong>
-            <MudLink Href="@Url.ShortenedUrl" Target="_blank">@Url.ShortenedUrl</MudLink>
-        </MudText>
-    }
+                <MudItem xs="12">
+                    <MudTextField Label="URL Original" 
+                                 @bind-Value="ImputModel.OriginalUrl"
+                                 Placeholder="Ex: https://www.exemplo.com"
+                                 For="@(() => ImputModel.OriginalUrl)" 
+                                 Variant="Variant.Outlined"
+                                 FullWidth="true"
+                                 Class="mb-4"
+                                 Required="true"
+                                 AdornmentIcon="@Icons.Material.Filled.Link"
+                                 Adornment="Adornment.Start"
+                                    HelperText="Digite uma URL válida começando com http:// ou https://"
+                                    Clearable="true"/>
+                    </MudItem>
 
-</MudPaper>
+                    <MudItem xs="12" Class="text-center">
+                        <MudButton ButtonType="ButtonType.Submit" 
+                                Color="Color.Primary" 
+                                Variant="Variant.Filled"
+                                EndIcon="@Icons.Material.Filled.Send"
+                                Size="Size.Large"
+                                Class="mt-4 px-8"
+                                Disabled="@(!IsValidUrl(ImputModel.OriginalUrl))">
+                            Encurtar URL
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+                </EditForm>
+
+                @if (Url.ShortenedUrl != null)
+                {
+                    <MudItem xs="12" Class="mt-8">
+                        <MudPaper Class="pa-4 rounded-lg" Elevation="3"
+                            Style="background-color: var(--mud-palette-primary-lighten)">
+                            <MudText Typo="Typo.h6" Class="d-block mb-2" Color="Color.Primary">
+                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
+                            URL Encurtada Criada com Sucesso!
+                        </MudText>
+
+                        <MudCard Class="mt-4">
+                            <MudCardContent>
+                                <MudText Typo="Typo.body1" Class="d-block mb-2">Sua URL encurtada:</MudText>
+                                <MudTextField Variant="Variant.Outlined" Value="@Url.ShortenedUrl" ReadOnly="true"
+                                    FullWidth="true" Class="mb-2" AdornmentIcon="@Icons.Material.Filled.ContentCopy"
+                                    Adornment="Adornment.End"
+                                    OnAdornmentClick="@(() => CopyToClipboard(Url.ShortenedUrl))" />
+
+                                <div class="text-center mt-4">
+                                    <MudLink Href="@Url.ShortenedUrl" Target="_blank" Typo="Typo.button"
+                                        Color="Color.Primary" Underline="Underline.Always"
+                                        Class="d-inline-flex align-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.OpenInNew" Class="mr-2" />
+                                        Testar URL Encurtada
+                                    </MudLink>
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+
+                        <MudAlert Variant="Variant.Outlined" Severity="Severity.Info" Class="mt-4">
+                            <MudText>Esta URL encurtada redireciona para: <strong>@ImputModel.OriginalUrl</strong></MudText>
+                        </MudAlert>
+                    </MudPaper>
+                </MudItem>
+                }
+  
+    </MudPaper>
+</MudContainer>

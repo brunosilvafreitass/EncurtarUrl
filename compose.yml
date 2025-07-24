@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: EncurtarUrl.api/Dockerfile
+    ports:
+      - "5048:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - CORS__AllowedOrigins=http://web,http://localhost:5278  # Adicione esta linha
+    networks:
+      - app-network
+
+  web:
+    build:
+      context: .
+      dockerfile: EncurtarUrl.WebWasm/Dockerfile
+    ports:
+      - "5278:80"
+    depends_on:
+      - api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

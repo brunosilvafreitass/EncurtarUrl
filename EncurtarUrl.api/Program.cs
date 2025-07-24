@@ -4,7 +4,6 @@ using EncurtarUrl.api.Handlers;
 using EncurtarUrl.api.Services;
 using EncurtarUrl.Core;
 using EncurtarUrl.Core.Handlers;
-using EncurtarUrl.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,5 +48,6 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapEndPoints();
+
 
 app.Run();
