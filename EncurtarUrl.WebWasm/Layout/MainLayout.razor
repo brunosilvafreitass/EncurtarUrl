@@ -1,12 +1,48 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudMainContent>
-        <MudContainer>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Link" Color="Color.Inherit" Edge="Edge.Start" />
+        <MudText Typo="Typo.h6" Class="ml-2">Encurtador de URL</MudText>
+        <MudSpacer />
+        <MudToggleIconButton @bind-Toggled="_isDarkMode"
+                           Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" title="Modo Claro"
+                           ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledColor="Color.Inherit" toggledTitle="Modo Escuro" />
+    </MudAppBar>
+    <MudMainContent Class="pt-16 pb-16">
+        <MudContainer MaxWidth="MaxWidth.Large">
             @Body
         </MudContainer>
     </MudMainContent>
+    <MudAppBar Elevation="1" Style="top: auto; bottom: 0" Dense="true" Class="py-3">
+        <MudContainer MaxWidth="MaxWidth.Large">
+            <MudText Typo="Typo.body2" Align="Align.Center">
+                © @DateTime.Now.Year - Encurtador de URL - Desenvolvido com Blazor WebAssembly e MudBlazor
+            </MudText>
+        </MudContainer>
+    </MudAppBar>
 </MudLayout>
+
+@code {
+    private bool _isDarkMode = false;
+    private MudTheme _theme = new MudTheme()
+    {
+        PaletteLight = new PaletteLight()
+        {
+            Primary = "#1E88E5",
+            Secondary = "#26A69A",
+            AppbarBackground = "#1E88E5",
+        },
+        PaletteDark = new PaletteDark()
+        {
+            Primary = "#90CAF9",
+            Secondary = "#80CBC4",
+            AppbarBackground = "#1E1E1E",
+            Background = "#121212",
+            Surface = "#1E1E1E",
+        }
+    };
+}

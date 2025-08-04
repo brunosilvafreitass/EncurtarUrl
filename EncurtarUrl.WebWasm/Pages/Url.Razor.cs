@@ -22,7 +22,7 @@ public partial class EncurtadorPage : ComponentBase
     public ISnackbar Snackbar { get; set; } = null!;
     [Inject]
     public IUrlHandler Handler { get; set; } = null!;
-    public bool IsValidUrl(string url)
+    public static bool IsValidUrl(string url)
     {
         if (string.IsNullOrWhiteSpace(url))
             return false;
@@ -30,7 +30,7 @@ public partial class EncurtadorPage : ComponentBase
         // Regex melhorada para validar URLs
         return Regex.IsMatch(url,
             @"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$",
-            RegexOptions.IgnoreCase);
+            RegexOptions.IgnoreCase | RegexOptions.Compiled);
     }
     public async Task EncurtarUrlAsync()
     {
