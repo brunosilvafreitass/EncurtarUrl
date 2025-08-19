@@ -8,9 +8,9 @@
         <MudIconButton Icon="@Icons.Material.Filled.Link" Color="Color.Inherit" Edge="Edge.Start" />
         <MudText Typo="Typo.h6" Class="ml-2">Encurtador de URL</MudText>
         <MudSpacer />
-        <MudToggleIconButton @bind-Toggled="_isDarkMode"
-                           Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" title="Modo Claro"
-                           ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledColor="Color.Inherit" toggledTitle="Modo Escuro" />
+        <MudToggleIconButton @bind-Toggled="_isDarkMode" Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit"
+            title="Modo Claro" ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledColor="Color.Inherit"
+            toggledTitle="Modo Escuro" />
     </MudAppBar>
     <MudMainContent Class="pt-16 pb-16">
         <MudContainer MaxWidth="MaxWidth.Large">
@@ -32,14 +32,14 @@
     {
         PaletteLight = new PaletteLight()
         {
-            Primary = "#1E88E5",
-            Secondary = "#26A69A",
-            AppbarBackground = "#1E88E5",
+            Primary = "#673AB7", // Roxo
+            Secondary = "#FFC107", // Âmbar
+            AppbarBackground = "#673AB7",
         },
         PaletteDark = new PaletteDark()
         {
-            Primary = "#90CAF9",
-            Secondary = "#80CBC4",
+            Primary = "#B39DDB", // Roxo claro
+            Secondary = "#FFD54F", // Âmbar claro
             AppbarBackground = "#1E1E1E",
             Background = "#121212",
             Surface = "#1E1E1E",

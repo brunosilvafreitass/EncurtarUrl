@@ -51,7 +51,7 @@ namespace EncurtarUrl.api.Handlers
                 {
                     OriginalUrl = originalUrl,
                     ShortenedCode = shortCode,
-                    ShortenedUrl = $"{Configuration.BackEndUrl}/api/v1/shortened/{shortCode}",
+                    ShortenedUrl = $"{Configuration.BackEndUrl}/{shortCode}",
                     ClickCount = 0,
                     CreatedAt = DateTime.UtcNow.AddHours(-3)
                 };

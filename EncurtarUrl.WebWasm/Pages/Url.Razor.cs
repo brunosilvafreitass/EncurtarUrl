@@ -10,53 +10,42 @@ namespace EncurtarUrl.WebWasm.Components.Pages;
 
 public partial class EncurtadorPage : ComponentBase
 {
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; } = null!;
+    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
     public bool IsBusy { get; set; } = false;
     public ShortenedUrlRequest ImputModel { get; set; } = new();
     public Url Url { get; set; } = new();
 
-    [Inject]
-    public NavigationManager NavigationManager { get; set; } = null!;
-    [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
-    [Inject]
-    public IUrlHandler Handler { get; set; } = null!;
-    public static bool IsValidUrl(string url)
-    {
-        if (string.IsNullOrWhiteSpace(url))
-            return false;
+    [Inject] public NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] public ISnackbar Snackbar { get; set; } = null!;
+    [Inject] public IUrlHandler Handler { get; set; } = null!;
 
-        // Regex melhorada para validar URLs
-        return Regex.IsMatch(url,
-            @"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$",
-            RegexOptions.IgnoreCase | RegexOptions.Compiled);
-    }
     public async Task EncurtarUrlAsync()
     {
         IsBusy = true;
+        Url.ShortenedUrl = string.Empty; // Limpa a URL anterior
+        StateHasChanged(); // Atualiza a UI para esconder o resultado antigo
+
         try
         {
             var result = await Handler.CreateShortUrlAsync(ImputModel);
-            Url.ShortenedUrl = result.Data!.ShortenedUrl;
-            StateHasChanged();
-            if (result.IsSuccess)
+            if (result.IsSuccess && result.Data != null)
             {
-                Snackbar.Add(result.Message!, Severity.Success);
+                Url.ShortenedUrl = result.Data.ShortenedUrl;
+                Snackbar.Add(result.Message ?? "URL encurtada com sucesso!", Severity.Success);
             }
             else
             {
-                Snackbar.Add(result.Message!, Severity.Error);
+                Snackbar.Add(result.Message ?? "Ocorreu um erro ao encurtar a URL.", Severity.Error);
             }
         }
         catch (Exception ex)
         {
-
             Snackbar.Add(ex.Message, Severity.Error);
         }
         finally
         {
             IsBusy = false;
+            StateHasChanged(); // Garante que a UI seja atualizada após a operação
         }
     }
     public async Task CopyToClipboard(string text)

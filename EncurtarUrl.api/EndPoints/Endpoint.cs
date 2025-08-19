@@ -8,11 +8,11 @@ public static class Endpoint
     {
         var endpoints = app.MapGroup("");
 
-        endpoints.MapGroup("/")
-        .WithTags("Healtch Check")
-        .MapGet("/", () => Results.Ok("API is running"));
+        // endpoints.MapGroup("/")
+        // .WithTags("Healtch Check")
+        // .MapGet("/", () => Results.Ok("API is running"));
 
-        endpoints.MapGroup("api/v1/shortened")
+        endpoints.MapGroup("")
         .WithTags("Shortened Urls")
         .MapEndpoint<UrlEndpoint>()
         .MapEndpoint<RedirectToOriginalUrlEndpoint>()
