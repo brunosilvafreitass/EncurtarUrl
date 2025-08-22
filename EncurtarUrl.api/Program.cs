@@ -13,9 +13,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("wasm",
         policy => policy
-            .WithOrigins([Configuration.BackEndUrl,
-                          Configuration.FrontEndUrl,
-                          "https://encurtador.brunoserver.ip-ddns.com/"]) // coloque a URL do seu frontend
+            .WithOrigins("http://localhost:5278",//front
+                        "http://localhost:5048",//back
+                        "https://encurtador.brunoserver.ip-ddns.com",
+                        "https://swagger.brunoserver.ip-ddns.com"
+                    )
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
@@ -34,6 +36,7 @@ builder.Services.AddTransient<IUrlHandler, Urlhandler>();
 builder.Services.AddTransient<UrlShortenedService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x => { x.CustomSchemaIds(type => type.FullName); });
+
 
 var app = builder.Build();
 
