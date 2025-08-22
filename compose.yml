@@ -10,7 +10,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
-      - CORS__AllowedOrigins=http://web,http://localhost:5278  # Adicione esta linha
+      - CORS__AllowedOrigins=http://localhost:5278  # Adicione esta linha
     networks:
       - app-network
 
@@ -20,7 +20,6 @@ services:
       dockerfile: EncurtarUrl.WebWasm/Dockerfile
     ports:
       - "5278:80"
-      - "5443:443"  # Porta HTTPS
     depends_on:
       - api
     environment:
