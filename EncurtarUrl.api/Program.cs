@@ -14,7 +14,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("wasm",
         policy => policy
             .WithOrigins([Configuration.BackEndUrl,
-                          Configuration.FrontEndUrl]) // coloque a URL do seu frontend
+                          Configuration.FrontEndUrl,
+                          "https://encurtador.brunoserver.ip-ddns.com/"]) // coloque a URL do seu frontend
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
