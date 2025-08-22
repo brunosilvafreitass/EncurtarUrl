@@ -11,7 +11,7 @@ public class UrlHandler(IHttpClientFactory httpClientFactory) : IUrlHandler
     private readonly HttpClient _httpClient = httpClientFactory.CreateClient(Configuration.HttpClientName);
     public async Task<BaseResponse<Url?>> CreateShortUrlAsync(ShortenedUrlRequest request)
     {
-        var result = await _httpClient.PostAsJsonAsync("/", request);
+        var result = await _httpClient.PostAsJsonAsync("", request);
         return await result.Content.ReadFromJsonAsync<BaseResponse<Url?>>() ?? new BaseResponse<Url?>(null, 400, "Failed to create short URL");
     }
 
