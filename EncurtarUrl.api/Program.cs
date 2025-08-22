@@ -14,7 +14,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("wasm",
         policy => policy
             .WithOrigins([Configuration.BackEndUrl,
-                          Configuration.FrontEndUrl]) // coloque a URL do seu frontend
+                          Configuration.FrontEndUrl,
+                          "http://localhost:5278",
+                          "http://web:80"]) // URLs do frontend e nginx
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
