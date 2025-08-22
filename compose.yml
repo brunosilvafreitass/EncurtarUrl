@@ -20,6 +20,7 @@ services:
       dockerfile: EncurtarUrl.WebWasm/Dockerfile
     ports:
       - "5278:80"
+      - "5443:443"  # Porta HTTPS
     depends_on:
       - api
     environment:

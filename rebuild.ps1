@@ -35,12 +35,16 @@ Write-Host "📊 Status dos containers:" -ForegroundColor Magenta
 docker compose ps
 
 Write-Host ""
-Write-Host "🌐 Acesse a aplicação em: http://localhost:5278" -ForegroundColor Magenta
+Write-Host "🌐 Acesse a aplicação em:" -ForegroundColor Magenta
+Write-Host "   HTTP:  http://localhost:5278" -ForegroundColor Cyan
+Write-Host "   HTTPS: https://localhost:5443" -ForegroundColor Cyan
 Write-Host "🔧 API disponível em: http://localhost:5048" -ForegroundColor Magenta
 Write-Host "📚 Swagger UI: http://localhost:5048/swagger" -ForegroundColor Magenta
 Write-Host ""
-Write-Host "💡 O erro 'POST https://encurtador.brunoserver.ip-ddns.com/ 405' foi corrigido!" -ForegroundColor Green
-Write-Host "💡 Agora a aplicação faz POST para '/api' corretamente" -ForegroundColor Green
+Write-Host "💡 Correções aplicadas:" -ForegroundColor Green
+Write-Host "   ✅ Erro 'POST https://encurtador.brunoserver.ip-ddns.com/ 405' corrigido" -ForegroundColor Green
+Write-Host "   ✅ Mixed Content (HTTP/HTTPS) resolvido" -ForegroundColor Green
+Write-Host "   ✅ Suporte a HTTPS adicionado" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "Pressione qualquer tecla para continuar..." -ForegroundColor Gray
