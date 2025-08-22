@@ -7,7 +7,7 @@ using EncurtarUrl.WebWasm.Handlers;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-Configuration.BackEndUrl = builder.Configuration.GetValue<string>("BackEndUrl") ?? "/api";
+Configuration.BackEndUrl = builder.Configuration.GetValue<string>("BackEndUrl") ?? string.Empty;
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
@@ -17,18 +17,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddMudServices();
 
 builder.Services
-    .AddHttpClient(Configuration.HttpClientName, opt => { 
-        var baseUrl = string.IsNullOrEmpty(Configuration.BackEndUrl) ? "/api" : Configuration.BackEndUrl;
-        if (baseUrl.StartsWith("/"))
-        {
-            // Para URLs relativas, usar o BaseAddress do host atual
-            opt.BaseAddress = new Uri(new Uri(builder.HostEnvironment.BaseAddress), baseUrl);
-        }
-        else
-        {
-            // Para URLs absolutas
-            opt.BaseAddress = new Uri(baseUrl);
-        }
+    .AddHttpClient(Configuration.HttpClientName, client =>
+    {
+        client.BaseAddress = new Uri(Configuration.BackEndUrl);
     });
 
 builder.Services.AddTransient<IUrlHandler, UrlHandler>();
